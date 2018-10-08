@@ -13,36 +13,41 @@
 <body>
 
   <div class="container">
+    <!-- jumbotron -->
     <div class="row">
       <div class="col-md-12 jumbotron text-center" style="background-color:lightgrey">
         <h1 style="color: blue"> Button Biodiversity Dashboard </h1>
-        <p><em>Interactive charts below to explore the dataset!</em></p>
+        <p><em>Interactions and Insights!</em></p>
       </div>
     </div>
+
+    <!-- sample select panel -->
     <div class="row">
       <div class="col-md-2">
-        <div class="well">
-          <h5>Select Sample:</h5>
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Sample MetaData</h3>
-          </div>
-          <div id="sample-metadata" class="panel-body"></div>
-        </div>
+                <h5 style="font-weight: bold;color: rgb(133, 105, 69)">Select Sample</h5>
+                <select id="selDataset" onchange="optionChanged(this.value)"></select>
+            <hr>
+            <div class="row">
+                <h5 style="font-weight: bold;color: rgb(133, 105, 69)">Sample Metadata</h5>
+                <div id="sample-metadata" class="panel-body"></div>
+            </div>
       </div>
+
+      <!-- pie -->
       <div class="col-md-5">
-        <div id="pie"></div>
+          <div id="pie" align="center" ></div>
       </div>
+
+      <!-- gauge -->
       <div class="col-md-5">
-        <div id="gauge"></div>
-      </div>
-    </div>
+          <div id="gauge" style="padding-left: 0px;padding-right: 0px;margin: 0px;"></div>
+      </div> 
   </div>
+
+  <!-- bubble -->
   <div class="row">
     <div class="col-md-12">
-      <div id="bubble"></div>
+            <div id="bubble"></div>
     </div>
   </div>
 

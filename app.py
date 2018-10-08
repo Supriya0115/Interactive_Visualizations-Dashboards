@@ -101,6 +101,7 @@ def sample_metadata(sample):
     print(sample_metadata)
     return jsonify(sample_metadata)
 
+# Return OTU IDs and sample value
 @app.route("/samples/<sample>")
 def samples(sample):
     """Return `otu_ids`, `otu_labels`,and `sample_values`."""
@@ -120,6 +121,40 @@ def samples(sample):
     }
     return jsonify(data)
 
+# Return OTU descriptions
+@app.route("/otu")
+def otu():
+
+    # Use Pandas to perform the sql query
+    stmt = db.session.query(OTU).statement
+    df = pd.read_sql_query(stmt, db.session.bind)
+
+    otu_desc = df["lowest_taxonomic_unit_found"]
+    otu_desc_list = [desc for desc in otu_desc]
+    return jsonify(otu_desc_list)
+
+# Return washing frequency 
+@app.route("/wfreq/<sample>")
+def wfreq(sample):
+
+    # Use Pandas to perform the sql query
+    stmt = db.session.query(Samples_Metadata).statement
+    df = pd.read_sql_query(stmt, db.session.bind)
+    sample = int(sample[3:])
+
+    wfreq_data = (db.session
+                     .query(Samples_Metadata.WFREQ,
+                            Samples_Metadata.SAMPLEID)
+                     .filter(Samples_Metadata.SAMPLEID == sample)
+                     .group_by(Samples_Metadata.SAMPLEID)
+                     .all())
+
+
+    sample_wfreq = {'wfreq': wfreq_data[0][0],
+                    'sample_id': wfreq_data[0][1],
+                    }
+    
+    return jsonify(sample_wfreq)
 
 if __name__ == "__main__":
     app.run()
